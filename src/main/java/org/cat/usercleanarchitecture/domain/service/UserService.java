@@ -14,4 +14,20 @@ public class UserService {
                 .filter(user -> user.getLastName().equalsIgnoreCase(lastNameToFind))
                 .toList();
     }
+
+    public static List<User> findByEmailDomain(List<User> users, String domainFilter) {
+        if (users == null || domainFilter == null || domainFilter.isBlank()) return List.of();
+
+        String normalizedFilter = domainFilter.trim();
+        if (normalizedFilter.startsWith("@")) {
+            normalizedFilter = normalizedFilter.substring(1);
+        }
+        normalizedFilter = normalizedFilter.toLowerCase();
+        String finalFilter = normalizedFilter;
+
+        return users.stream()
+                .filter(user -> user != null && user.getEmail() != null)
+                .filter(user -> user.getEmail().toLowerCase().contains(finalFilter))
+                .toList();
+    }
 }

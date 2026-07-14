@@ -8,4 +8,6 @@ public interface IUserUseCase {
     User create(User user);
 
     List<User> findByLastName(String lastName);
+
+    List<User> findByEmailDomain(String email);
 }

@@ -27,4 +27,13 @@ public class UserUseCaseImpl implements IUserUseCase {
         List<User> users = userPort.findAll();
         return UserService.findByLastName(users, lastName);
     }
+
+    @Override
+    public List<User> findByEmailDomain(String email) {
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("El parámetro 'email' es requerido y no puede estar vacío");
+        }
+        List<User> users = userPort.findAll();
+        return UserService.findByEmailDomain(users, email);
+    }
 }

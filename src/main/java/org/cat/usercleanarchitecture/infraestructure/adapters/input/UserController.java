@@ -39,4 +39,17 @@ public class UserController {
                 .toList();
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<?> findByEmailDomain(@RequestParam String email) {
+        try {
+            List<User> users = userUseCase.findByEmailDomain(email);
+            List<UserResponse> userResponse = users.stream()
+                    .map(UserResponseMapper.INSTANCE::toUserRequest)
+                    .toList();
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
 }
